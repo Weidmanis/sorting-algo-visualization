@@ -3,9 +3,6 @@ import timeit
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-import sys
-sys.setrecursionlimit(10000)
-
 
 #Bubble sort
 def bubble_sort(shuffled):
@@ -34,6 +31,7 @@ def bubble_sort(shuffled):
 
     return bubble_s
 
+
 def insertion_sort(shuffled):
     """ Insertion Sort algo """
 
@@ -48,6 +46,7 @@ def insertion_sort(shuffled):
             j -= 1
     
     return insert_s
+
 
 def merge(left, right):
     """ Merge_sort helper fcn, that does the merging """
@@ -65,6 +64,7 @@ def merge(left, right):
     indx_left = indx_right = 0
 
     while len(merge_s) < len(left) + len(right):
+
         if left[indx_left] <= right[indx_right]:
             merge_s.append(left[indx_left])
             indx_left += 1
@@ -82,45 +82,65 @@ def merge(left, right):
 
     return merge_s
 
+
 def merge_sort(shuffled):
-    """ Fcn to split the input list in left,right arrays """
+    """ Fcn to split the input list in left, right arrays """
 
     # Check if input array is longer than 2 instances
     # otherwise its already sorted
-    if len(shuffled) < 1:
+    if len(shuffled) < 2:
         return shuffled
 
     # Find the midpoint for the array using floor division
-    midp = len(shuffled) // 2
-
-    # left = merge_sort(shuffled[:midp])
-    # right = merge_sort(shuffled[midp:])
+    midpoint = len(shuffled) // 2
 
     return merge(
-        left = merge_sort(shuffled[:midp]), 
-        right = merge_sort(shuffled[midp:]))
+        left=merge_sort(shuffled[:midpoint]),
+        right=merge_sort(shuffled[midpoint:]))
+
 
 def quick_sort(shuffled):
-    pass
+    """ Quick sort algorithm """
 
-def tim_sort(shuffled):
-    pass
+    # Check if the shuffled list isn't shorter than 2 int
+    if len(shuffled) < 2:
+        return shuffled
 
-def selection_sort(shuffled):
-    pass
+    # Create empty low, same, high lists
+    low, same, high = [], [], []
 
+    # Select the pivot element randomly
+    pivot = shuffled[random.randint(0, len(shuffled) - 1)]
+
+    # loop through the shuffled
+    for item in shuffled:
+        if item < pivot:
+            low.append(item)
+        elif item == pivot:
+            same.append(item)
+        elif item > pivot:
+            high.append(item)
+        
+    # return the finished list
+    return quick_sort(low) + same + quick_sort(high)
+
+# To Update
+# def tim_sort(shuffled):
+#     pass
+
+# def selection_sort(shuffled):
+#     pass
 
 # Ask User to enter a number to determine range
 N = int(input("Enter a number of integers to sort: "))
 
-# pick_algo = input("Pick which sorting algo you would like to see:\n\n\
-#     - for Bubble Sort algo type 'b'\n\
-#     - for Insertion Sort algo type 'i'\n\
-#     - for Merge Sort algo type 'm'\n\
-#     - for Quick Sort algo type 'q'\n\
-#     - for Selection Sort algo type 's'\n\
-#     - for Timsort algo type 't'\n\
-#     Your choice?: ")
+pick_algo = input("Pick which sorting algo you would like to see:\n\n\
+    - for Bubble Sort algo type 'bubble'\n\
+    - for Insertion Sort algo type 'insert'\n\
+    - for Merge Sort algo type 'merge'\n\
+    - for Quick Sort algo type 'quick'\n\
+    Your choice?: ").lower()
+
 
 # Generate numbers
 # x + 1, cause range(N) == 0,1,2,...,N-1
@@ -130,19 +150,39 @@ numbers = [x + 1 for x in range(N)]
 shuffled = numbers.copy()
 random.shuffle(shuffled)
 
+bubble, insert, merge, quick = [], [], [], []
 
-# IF/ELIF/ELSE loop to pick the algorithm
-# if pick_algo == 'b':
-#     bubble_sort(shuffled)
-# elif pick_algo == 'i':
-#     insertion_sort(shuffled)
-# elif pick_algo == 'm':
-#     merge_sort=(shuffled, N)
-# elif pick_algo == 'q':
-#     pass
-# elif pick_algo == 's':
-#     pass
-# elif pick_algo == 't':
-#     pass
-# else:
-#     print("Invalid algo was picked")
+# # IF/ELIF/ELSE loop to pick the algorithm
+if pick_algo == 'bubble':
+    bubble = bubble_sort(shuffled)
+elif pick_algo == 'insert':
+    insert = insertion_sort(shuffled)
+elif pick_algo == 'merge':
+    merge = merge_sort(shuffled)
+elif pick_algo == 'quick':
+    quick = quick_sort(shuffled)
+else:
+    print("Invalid algo was picked")
+
+
+algo_names={'bubble':'Bubble Sort',
+            'insert':'Insertion Sort',
+            'merge':'Merge Sort',
+            'quick':'Quick Sort'}
+
+str_to_fcn={'bubble':bubble,
+            'insert':insert,
+            'merge':merge,
+            'quick':quick}
+
+plt.figure(figsize=(12,6))
+plt.subplot(1,2,1)
+plt.bar(numbers,shuffled, color = 'r')
+plt.title("Unsorted Numbers")
+
+plt.subplot(1,2,2)
+plt.bar(numbers, str_to_fcn.get(pick_algo), color = 'g')
+plt.title(f"Numbers Sorted Using {algo_names[pick_algo]} Algorithm")
+
+plt.tight_layout()
+plt.show()
