@@ -31,9 +31,8 @@ the importance of Big O notation for algorithms.
 ## To-do
 
 - [ ] Add Timsort Algo
-- [ ] Fix the mergeSort error
+- [x] Fix the mergeSort error
 - [ ] Add Selection Sort Algo
 - [ ] Animations of the sorting process (matplotlib.animation)
-- [ ] Add timing of each algorithm
+- [x] Add timing of each algorithm
   - [ ] Compare algorithm runtime
-- [ ] Fix the 

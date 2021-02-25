@@ -1,11 +1,8 @@
-import random
+import pandas as pd
+import numpy as np
 from timeit import default_timer as timer
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+import random
 
-
-
-#Bubble sort
 def bubble_sort(shuffled):
     """ Bubble sort algorithm """
 
@@ -120,75 +117,28 @@ def quick_sort(shuffled):
     # return the finished list
     return quick_sort(low) + same + quick_sort(high)
 
-# To Update
-# def tim_sort(shuffled):
-#     pass
 
-# def selection_sort(shuffled):
-#     pass
+algos = ['Bubble', 'Insertion', 'Merge', 'Quick']
+fcns = [bubble_sort, insertion_sort, merge_sort, quick_sort]
 
-# Ask User to enter a number to determine range
-N = int(input("Enter a number of integers to sort: "))
+time = []
+Ns = [1000]
+bubble, insert, merg, quick = [],[],[],[]
+res = []
 
-pick_algo = input("Pick which sorting algo you would like to see:\n\n\
-    - for Bubble Sort algo type 'bubble'\n\
-    - for Insertion Sort algo type 'insert'\n\
-    - for Merge Sort algo type 'merge'\n\
-    - for Quick Sort algo type 'quick'\n\
-    Your choice?: ").lower()
+for i in Ns:
+    
+    numbers = [x+1 for x in range(i)]
+    mixed = numbers.copy()
 
-# Generate numbers
-# x + 1, cause range(N) == 0,1,2,...,N-1
-numbers = [x + 1 for x in range(N)]
+    for function in fcns:
+        for i in range(1,2):
 
-# Make a copy of numbers list and shuffle it
-shuffled = numbers.copy()
-random.shuffle(shuffled)
+            random.shuffle(mixed)
 
+            start = timer()
+            function(mixed)
+            time = timer() - start
+            res.append(time)
 
-# Create empty lists for each algo sorted list
-bubble, insert, mer, quick = [],[],[],[]
-
-
-# # IF/ELIF/ELSE loop to pick the algorithm
-if pick_algo == 'bubble':
-    start = timer()
-    bubble = bubble_sort(shuffled)
-    end = timer()
-elif pick_algo == 'insert':
-    start = timer()
-    insert = insertion_sort(shuffled)
-    end = timer()
-elif pick_algo == 'merge':
-    start = timer()
-    mer = merge_sort(shuffled)
-    end = timer()
-elif pick_algo == 'quick':
-    start = timer()
-    quick = quick_sort(shuffled)
-    end = timer()
-else:
-    print("Invalid algo was picked")
-
-
-algo_names={'bubble':'Bubble Sort',
-            'insert':'Insertion Sort',
-            'merge':'Merge Sort',
-            'quick':'Quick Sort'}
-
-str_to_fcn={'bubble':bubble,
-            'insert':insert,
-            'merge':mer,
-            'quick':quick}
-
-
-plt.figure(figsize=(12,6))
-plt.subplot(1,2,1)
-plt.bar(numbers,shuffled, color = 'r')
-plt.title("Unsorted Numbers")
-
-plt.subplot(1,2,2)
-plt.bar(numbers, str_to_fcn.get(pick_algo), color = 'g')
-plt.title(f"Numbers Sorted Using {algo_names[pick_algo]} Algorithm")
-plt.text(0.25,(N-1), f"Sorted in {end - start:.5f} seconds ")
-plt.show()
+print(res)
