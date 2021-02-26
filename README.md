@@ -5,8 +5,10 @@ The main idea of the program is to write code that consists of different sorting
 to better understand how they work from code side. Plus on top of that to better understand 
 the importance of Big O notation for algorithms.
 
-[Big_O_Notation](https://en.wikipedia.org/wiki/Big_O_notation)
-[Sorting_algorithms](https://en.wikipedia.org/wiki/Sorting_algorithm)
+Reading:
+
+1. [Big_O_Notation](https://en.wikipedia.org/wiki/Big_O_notation)
+2. [Sorting_algorithms](https://en.wikipedia.org/wiki/Sorting_algorithm)
 
 
 ## Sorting Algorithms included:
@@ -28,11 +30,23 @@ the importance of Big O notation for algorithms.
    2. Sorted list of numbers
 
 ### Sorting Algorithm runtime:
-#### 
+
+#### Tables presented below compare the compute time of each algorithm
+
+##### Time measuring process:
+
+   1. Each algorithm is timed on 4 different lengths of unsorted lists
+      1. N = [10, 100, 1000, 10000]
+   2. Every algo is given 5 tries to sort the mixed lists, each itteration time is noted
+   3. To time duration of computing for each time timer() is used.
+
+   NOTE: Take in consideration that each list before sorting is shuffled at random.
+
+#### Average time of 5 attempts for each length of lists:
 
 | Sorting Algo / Samples | 10 |	100   |  1000  |  10000 |
 | --- | --- | --- | --- | --- |
-| Bubble |  0.0028108999999858   |	0.188403899999912 |	20.895675100000062   |	22.05723540000008 |
+|  Bubble |  0.0028108999999858   |	0.188403899999912 |	20.895675100000062   |	22.05723540000008 |
 |  Insertion  |	0.0016550000000279   |	0.1850954999999885 |	19.09637620000012 |	21.24320380000017 |
 |  Merge |	0.0005453999999645   |	0.0082380999999713   |	0.1313644999997905   |	0.3478566999999657 |
 |  Quick |	0.00064210000005  |	0.0061302000001433   |	0.1041278000000147   |	0.0704792999999881   |
