@@ -181,7 +181,7 @@ str_to_fcn={'bubble':bubble,
             'merge':mer,
             'quick':quick}
 
-
+# Plotting the unsorted and sorted
 plt.figure(figsize=(12,6))
 plt.subplot(1,2,1)
 plt.bar(numbers,shuffled, color = 'r')
